@@ -5,55 +5,54 @@
 #define WORD 30
 int main(){
 
-	char *mode = "r";
-	FILE *f = fopen("input.txt", mode);
-	if (f==NULL){
-		printf("can't open file !@#!@#"); 
-	}
-
+	char buf, nextWord[WORD];
+	char func, word[WORD];
 	char s[LINE];
-	char word[WORD];
-	char func;
-	Getline(s, f);
-
 	int i=0;
-	while (s[i]!=' '){ 
-		word[i]=s[i]; i++; 
-	}
-	word[i]='\0';
-	while (s[i]!='\0'){ 
-		if (s[i]=='a'){ func='a'; }
-		if (s[i]=='b'){ func='b'; }
+
+	while ((buf=getc(stdin)) != ' '){
+		word[i]=buf;
 		i++;
 	}
-	//printf("Word is: %s\nProgram is: %c\n\n", word, func);
-	Getline(s, f);
+	word[i]='\0';
+	i=0;
+
+	while ((buf=getc(stdin)) != '\n'){ 
+		if (buf == 'a'){ func='a'; }
+		if (buf == 'b'){ func='b'; }
+
+	}
+
+	while ((buf=getc(stdin)) != '\n'){;}
 
 	if (func=='a'){
-		while (fgets(s, LINE, f)>0) {
+		while ((buf=getc(stdin)) != EOF){ 
+			s[0]=buf;
+			while ((buf=getc(stdin)) != '\n'){
+				s[i]=buf;
+				i++;
+			}
+			s[i]='\n';
+			i=1;
 			if (substring(s, word)) { printf("%s", s); }
 		}
+
 	}
 
 	if (func=='b'){
-		char t[WORD];
-		while (fgets(s, LINE, f)>0) {
-			i=0;
-			int j=0;
-			while (s[i]!='\0'){ 
-				if (s[i]==' ' || s[i]=='\t' || s[i]=='\n'){ 
-					t[j]='\0'; 
-					if (similar(t, word, 1)) { printf("%s\n", t); } 
-					if (similar(t, word, 0)) { printf("%s\n", t); } 
-					j=0; 
-				}
-				else { t[j]=s[i]; j++; }
+		while ((buf=getc(stdin)) != EOF){ 
+			if (buf == '\n' || buf == '\t' || buf == ' '){
+				nextWord[i] = '\0';
+				i=0;
+				if (similar(nextWord, word, 1)) { printf("%s\n", nextWord); } 
+				if (similar(nextWord, word, 0)) { printf("%s\n", nextWord); } 
+			}
+			else {
+				nextWord[i] = buf;
 				i++;
 			}
-
 		}
 	}
 
-	fclose(f);
 	return 0;
 }

@@ -4,16 +4,6 @@
 #define LINE 256
 #define WORD 30
 
-int Getline(char s[], FILE *f){
-	
-	fgets(s, LINE, f);
-	int i=0;
-	while (*(s+i)!='\n'){ 
-		i++;
-	}
-	return i;
-}
-
 int substring(char *str1, char *str2){
 	int i=0;
 	int j=0;
