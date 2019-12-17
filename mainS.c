@@ -21,7 +21,7 @@ int main(){
 		printf("%d,", *(arr+x));
 	}
 
-	printf("%d\n", *(arr+x));
+	printf("%d", *(arr+x));
 
 return 0;
 }
